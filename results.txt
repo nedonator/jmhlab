@@ -1,0 +1,38 @@
+
+Result "benchmarks.JSONSerialization.benchmark":
+  3184071,243 ±(99.9%) 187175,385 ops/s [Average]
+  (min, avg, max) = (3126691,380, 3184071,243, 3233022,028), stdev = 48608,853
+  CI (99.9%): [2996895,859, 3371246,628] (assumes normal distribution)
+
+Result "benchmarks.JSONDeserialization.benchmark":
+  2108476,364 ±(99.9%) 125637,224 ops/s [Average]
+  (min, avg, max) = (2053330,121, 2108476,364, 2133918,786), stdev = 32627,588
+  CI (99.9%): [1982839,140, 2234113,588] (assumes normal distribution)
+
+Result "benchmarks.ProtobufSerialization.benchmark":
+  993347,156 ±(99.9%) 54932,938 ops/s [Average]
+  (min, avg, max) = (969432,886, 993347,156, 1003234,881), stdev = 14265,910
+  CI (99.9%): [938414,218, 1048280,095] (assumes normal distribution)
+
+Result "benchmarks.ProtobufDeserialization.benchmark":
+  8220441,951 ±(99.9%) 868032,986 ops/s [Average]
+  (min, avg, max) = (7818484,019, 8220441,951, 8349363,830), stdev = 225425,410
+  CI (99.9%): [7352408,965, 9088474,936] (assumes normal distribution)
+
+
+Как мы видим, protobuf лучше умееет в десерализацию, но медленно сериализует. JSON и то и то делает нормально.
+Стандартная сериализация дает более интересные результаты:
+При сериализации затраты на создания стрима примерно равны записи 30 объектов, поэтому тестировались бачи по 1000 объектов.
+Бенчмарк при этом показывает не количество объектов, а количество бачей.
+
+Result "benchmarks.StdSerialization.benchmark":
+  33108,451 ±(99.9%) 653,096 ops/s [Average]
+  (min, avg, max) = (32894,135, 33108,451, 33361,763), stdev = 169,607
+  CI (99.9%): [32455,355, 33761,547] (assumes normal distribution)
+
+Result "benchmarks.StdDeserialization.benchmark":
+  27570,938 ±(99.9%) 303,745 ops/s [Average]
+  (min, avg, max) = (27515,355, 27570,938, 27701,623), stdev = 78,882
+  CI (99.9%): [27267,193, 27874,683] (assumes normal distribution)
+
+Получаем, что с бачами стандартная сериализация намного быстрее вышеприведенных, а без них - намного медленнее.
